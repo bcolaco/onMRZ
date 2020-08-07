@@ -1,6 +1,0 @@
-C:\Projects\onMRZ\onMRZ\bin\Release\onMRZ.dll
-C:\Projects\onMRZ\onMRZ\bin\Release\onMRZ.pdb
-C:\Projects\onMRZ\onMRZ\bin\Release\Newtonsoft.Json.dll
-C:\Projects\onMRZ\onMRZ\bin\Release\Newtonsoft.Json.xml
-C:\Projects\onMRZ\onMRZ\obj\Release\onMRZ.dll
-C:\Projects\onMRZ\onMRZ\obj\Release\onMRZ.pdb
