@@ -10,13 +10,9 @@
 
         public string DocumentType { get; set; }
 
-        public string DocumentTypeDescription { get; set; }
-
         public string AdditionalDocumentType { get; set; }
 
         public string IssuingCountryIso { get; set; }
-
-        public string IssuingCountryName { get; set; }
 
         public string FirstName { get; set; }
 
@@ -27,8 +23,6 @@
         public string DocumentNumber { get; set; }
 
         public string NationalityIso { get; set; }
-
-        public string NationalityName { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 

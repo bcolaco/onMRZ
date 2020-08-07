@@ -6,8 +6,6 @@
 
     public static class MRZParser
     {
-        private static readonly Nationalities _nationalities = new Nationalities();
-
         private static readonly Dictionary<char, int> _checkDigitArray = new Dictionary<char, int>();
 
         //Parsing is based on https://en.wikipedia.org/wiki/Machine-readable_passport
@@ -31,13 +29,7 @@
                 DateOfBirth = DateOfBirth(mrz)
             };
 
-            output.DocumentTypeDescription = DocumentTypeDescription(output.DocumentType);
-
-            output.IssuingCountryName = IssuingCountryName(output.IssuingCountryIso);
-
             output.FullName = (output.FirstName + " " + output.LastName).Replace("  ", " ").Trim();
-
-            output.NationalityName = NationalityName(output.NationalityIso);
 
             output.Age = (int)(DateTime.Now.Subtract(output.DateOfBirth).TotalDays / 365);
 
@@ -63,30 +55,9 @@
 
         }
 
-        private static string DocumentTypeDescription(string docType)
-        {
-            switch (docType)
-            {
-                case "P":
-                    return "Passport";
-                case "C":
-                    return "Card";
-                case "V":
-                    return "Visa";
-                default:
-                    throw new Exception("Invalid Document Type");
-            }
-        }
-
         private static string IssuingCountryIso(string mrz)
         {
             return mrz.Substring(2, 3);
-        }
-
-        private static string IssuingCountryName(string issIso)
-        {
-            var natItem = _nationalities.NationalitybyCode(issIso);
-            return natItem != null ? natItem.Name : string.Empty;
         }
 
         private static string FirstName(string mrz)
@@ -109,12 +80,6 @@
         private static string NationalityIso(string mrz)
         {
             return mrz.Substring(10 + 44, 3);
-        }
-
-        private static string NationalityName(string natIso)
-        {
-            var natItem = _nationalities.NationalitybyCode(natIso);
-            return natItem != null ? natItem.Name : string.Empty;
         }
 
         private static DateTime DateOfBirth(string mrz)
