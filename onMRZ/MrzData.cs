@@ -1,20 +1,18 @@
-﻿using System;
-
-namespace onMRZ
+﻿namespace onMRZ
 {
-    public class Customer
+    using System;
+
+    public class MrzData
     {
         public bool IsValid { get; set; }
 
         public string ValidationMessage { get; set; }
-        public string DocumentType { get; set; }
 
+        public string DocumentType { get; set; }
 
         public string DocumentTypeDescription { get; set; }
 
-
         public string AdditionalDocumentType { get; set; }
-
 
         public string IssuingCountryIso { get; set; }
 
@@ -41,7 +39,9 @@ namespace onMRZ
         public DateTime ExpireDate { get; set; }
 
         public DateTime IssueDate { get; set; }
+
         public string IssuingAuthority { get; set; }
+
         public string PlaceOfBirth { get; set; }
     }
 }

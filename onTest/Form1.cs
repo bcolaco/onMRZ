@@ -1,9 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using onMRZ;
-
-namespace onTest
+﻿namespace onTest
 {
+    using System;
+    using System.Windows.Forms;
+    using onMRZ;
+
     public partial class Form1 : Form
     {
         public Form1()
@@ -13,8 +13,7 @@ namespace onTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var parser = new MRZParser();
-            var customer = parser.Parse(dfsMRZ.Text);
+            var customer = MRZParser.Parse(dfsMRZ.Text);
             dfsIssuingCountry.Text = customer.IssuingCountryIso;
             dfsFirstName.Text = customer.FirstName;
             dfsLastName.Text = customer.LastName;
@@ -27,8 +26,7 @@ namespace onTest
 
         private void btnMake_Click(object sender, EventArgs e)
         {
-            var parser = new MRZParser();
-            var customer = new Customer
+            var customer = new MrzData
             {
                 IssuingCountryIso = dfsIssuingCountry.Text,
                 FirstName = dfsFirstName.Text,
@@ -41,7 +39,7 @@ namespace onTest
             };
 
 
-            dfsMRZ.Text = parser.CreatMrz(customer, false);
+            dfsMRZ.Text = MRZParser.CreatMrz(customer, false);
         }
     }
 }
