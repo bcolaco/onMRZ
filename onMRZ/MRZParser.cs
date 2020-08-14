@@ -2,11 +2,49 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public static class MRZParser
     {
-        private static readonly Dictionary<char, int> _checkDigitArray = new Dictionary<char, int>();
+        private static readonly Dictionary<char, int> _checkDigitArray = new Dictionary<char, int>
+        {
+            {'<', 0},
+            {'0', 0},
+            {'1', 1},
+            {'2', 2},
+            {'3', 3},
+            {'4', 4},
+            {'5', 5},
+            {'6', 6},
+            {'7', 7},
+            {'8', 8},
+            {'9', 9},
+            {'A', 10},
+            {'B', 11},
+            {'C', 12},
+            {'D', 13},
+            {'E', 14},
+            {'F', 15},
+            {'G', 16},
+            {'H', 17},
+            {'I', 18},
+            {'J', 19},
+            {'K', 20},
+            {'L', 21},
+            {'M', 22},
+            {'N', 23},
+            {'O', 24},
+            {'P', 25},
+            {'Q', 26},
+            {'R', 27},
+            {'S', 28},
+            {'T', 29},
+            {'U', 30},
+            {'V', 31},
+            {'W', 32},
+            {'X', 33},
+            {'Y', 34},
+            {'Z', 35},
+        };
 
         //Parsing is based on https://en.wikipedia.org/wiki/Machine-readable_passport
         //Useful information https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
@@ -130,67 +168,28 @@
             return line1 + line2;
         }
 
+        /// <summary>
+        /// Calculates the check digit from the document number.
+        /// </summary>
+        /// <param name="icaoPassportNumber">The ICAO document number.</param>
+        /// <returns>The check digit.</returns>
+        /// <seealso cref="http://www.highprogrammer.com/alan/numbers/mrp.html#checkdigit"/>
         internal static string CheckDigit(string icaoPassportNumber)
         {
-            //http://www.highprogrammer.com/alan/numbers/mrp.html#checkdigit
-            if (!_checkDigitArray.Any())
-                FillCheckDigitDictionary();
             icaoPassportNumber = icaoPassportNumber.ToUpper();
             var inputArray = icaoPassportNumber.Trim().ToCharArray();
             var multiplier = 7;
             var total = 0;
             foreach (var dig in inputArray)
             {
-                total = total + _checkDigitArray[dig] * multiplier;
+                total += _checkDigitArray[dig] * multiplier;
                 if (multiplier == 7) multiplier = 3;
                 else if (multiplier == 3) multiplier = 1;
                 else if (multiplier == 1) multiplier = 7;
             }
 
-            long result;
-            Math.DivRem(total, 10, out result);
+            Math.DivRem(total, 10, out long result);
             return result.ToString();
-        }
-
-        private static void FillCheckDigitDictionary()
-        {
-            _checkDigitArray.Add('<', 0);
-            _checkDigitArray.Add('0', 0);
-            _checkDigitArray.Add('1', 1);
-            _checkDigitArray.Add('2', 2);
-            _checkDigitArray.Add('3', 3);
-            _checkDigitArray.Add('4', 4);
-            _checkDigitArray.Add('5', 5);
-            _checkDigitArray.Add('6', 6);
-            _checkDigitArray.Add('7', 7);
-            _checkDigitArray.Add('8', 8);
-            _checkDigitArray.Add('9', 9);
-            _checkDigitArray.Add('A', 10);
-            _checkDigitArray.Add('B', 11);
-            _checkDigitArray.Add('C', 12);
-            _checkDigitArray.Add('D', 13);
-            _checkDigitArray.Add('E', 14);
-            _checkDigitArray.Add('F', 15);
-            _checkDigitArray.Add('G', 16);
-            _checkDigitArray.Add('H', 17);
-            _checkDigitArray.Add('I', 18);
-            _checkDigitArray.Add('J', 19);
-            _checkDigitArray.Add('K', 20);
-            _checkDigitArray.Add('L', 21);
-            _checkDigitArray.Add('M', 22);
-            _checkDigitArray.Add('N', 23);
-            _checkDigitArray.Add('O', 24);
-            _checkDigitArray.Add('P', 25);
-            _checkDigitArray.Add('Q', 26);
-            _checkDigitArray.Add('R', 27);
-            _checkDigitArray.Add('S', 28);
-            _checkDigitArray.Add('T', 29);
-            _checkDigitArray.Add('U', 30);
-            _checkDigitArray.Add('V', 31);
-            _checkDigitArray.Add('W', 32);
-            _checkDigitArray.Add('X', 33);
-            _checkDigitArray.Add('Y', 34);
-            _checkDigitArray.Add('Z', 35);
         }
     }
 }
