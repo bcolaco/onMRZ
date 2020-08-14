@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OnMRZ</name>
+    </assembly>
+    <members>
+        <member name="T:OnMRZ.MrzData">
+            <summary>
+            MRZ data holder.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.DocumentType">
+            <summary>
+            Gets or sets the document type.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.IssuingCountryIso">
+            <summary>
+            Gets or sets the issuing country ISO3.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.DocumentNumber">
+            <summary>
+            Gets or sets the document number.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.NationalityIso">
+            <summary>
+            Gets or sets the nationality ISO3.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.Gender">
+            <summary>
+            Gets or sets the gender.
+            </summary>
+        </member>
+        <member name="P:OnMRZ.MrzData.ExpireDate">
+            <summary>
+            Gets or sets the expire date.
+            </summary>
+        </member>
+        <member name="M:OnMRZ.MrzData.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:OnMRZ.MrzData.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="T:OnMRZ.MrzParser">
+            <summary>
+            The MRZ parser.
+            </summary>
+        </member>
+        <member name="M:OnMRZ.MrzParser.CreatMrz(OnMRZ.MrzData)">
+            <summary>
+            Creates an MRZ string from MRZ data.
+            </summary>
+            <param name="mrzData">The MRZ data.</param>
+            <returns>The MRZ string.</returns>
+        </member>
+        <member name="M:OnMRZ.MrzParser.Parse(System.String)">
+            <summary>
+            Parses a MRZ string.
+            </summary>
+            <param name="mrz">The MRZ string to parse.</param>
+            <returns>The parsed MRZ data.</returns>
+            <seealso cref="!:https://en.wikipedia.org/wiki/Machine-readable_passport"/>
+            <seealso cref="!:https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf"/>
+        </member>
+        <member name="M:OnMRZ.MrzParser.GetCheckDigit(System.String)">
+            <summary>
+            Calculates the check digit from the document number.
+            </summary>
+            <param name="icaoPassportNumber">The ICAO document number.</param>
+            <returns>The check digit.</returns>
+            <seealso cref="!:http://www.highprogrammer.com/alan/numbers/mrp.html#checkdigit"/>
+        </member>
+    </members>
+</doc>

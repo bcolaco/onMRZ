@@ -2,12 +2,12 @@
   <PropertyGroup>
     <ProjectGuid>{7806E76C-5BF4-49D2-9D5A-1E1320E8A4A4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>onTest</RootNamespace>
-    <AssemblyName>onTest</AssemblyName>
+    <RootNamespace>OnTest</RootNamespace>
+    <AssemblyName>OnTest</AssemblyName>
     <TargetFramework>net452</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\onMRZ\onMRZ.csproj" />
+    <ProjectReference Include="..\OnMRZ\OnMRZ.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Windows.Forms" />

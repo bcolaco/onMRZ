@@ -1,4 +1,4 @@
-﻿namespace onMRZ.Tests
+﻿namespace OnMRZ.Tests
 {
     using Shouldly;
     using System;

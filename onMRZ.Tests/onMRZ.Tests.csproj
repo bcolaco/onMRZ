@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\onMRZ\onMRZ.csproj" />
+    <ProjectReference Include="..\OnMRZ\OnMRZ.csproj" />
   </ItemGroup>
 
 </Project>

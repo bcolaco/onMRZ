@@ -1,4 +1,4 @@
-﻿namespace onTest
+﻿namespace OnTest
 {
     partial class Form1
     {

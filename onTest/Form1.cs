@@ -1,8 +1,8 @@
-﻿namespace onTest
+﻿namespace OnTest
 {
     using System;
     using System.Windows.Forms;
-    using onMRZ;
+    using OnMRZ;
 
     public partial class Form1 : Form
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace onTest.Properties
+namespace OnTest.Properties
 {
 
 

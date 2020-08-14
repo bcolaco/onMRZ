@@ -4,18 +4,19 @@
     <ProjectGuid>{AB01B57C-2428-48F0-8D3F-9FD330E96AF7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>onMRZ</RootNamespace>
-    <AssemblyName>onMRZ</AssemblyName>
+    <RootNamespace>OnMRZ</RootNamespace>
+    <AssemblyName>OnMRZ</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>bcolaco@gmail.com</Authors>
-    <RepositoryUrl>https://github.com/bcolaco/onMRZ</RepositoryUrl>
+    <RepositoryUrl>https://github.com/bcolaco/OnMRZ</RepositoryUrl>
     <NeutralLanguage></NeutralLanguage>
-    <PackageId>bcolaco.onMRZ</PackageId>
+    <PackageId>bcolaco.OnMRZ</PackageId>
     <Description>This is a library that parses a machine readable zone (MRZ) found in Machine readable Documents for instance (Passport).
 It parses PassportNumber, FirstName, LastName, dates (ex.date of birth, expire date), nationality and issuing country.
 It can also generate the MRZ string itslef (Machine Readable Zone) if all the proper parameters are passed to it.
-Forked from https://github.com/alialiayman/onMRZ.</Description>
+Forked from https://github.com/alialiayman/OnMRZ.</Description>
     <Version>0.1.0</Version>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="codecracker.CSharp" Version="1.1.0">
@@ -24,6 +25,10 @@ Forked from https://github.com/alialiayman/onMRZ.</Description>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.11.0.20529">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
