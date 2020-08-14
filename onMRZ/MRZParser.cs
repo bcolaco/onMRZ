@@ -5,6 +5,7 @@
 
     public static class MrzParser
     {
+        private const string DateFormat = "yyMMdd";
         private static readonly Dictionary<char, int> _checkDigitArray = new Dictionary<char, int>
         {
             {'<', 0},
@@ -183,12 +184,14 @@
             var line1 = docType + mrzData.IssuingCountryIso + (mrzData.LastName + "<<" + mrzData.FirstName).Replace(" ", "<");
             line1 = line1.PadRight(44, '<').Replace("-", "<");
             if (line1.Length > 44)
+            {
                 line1 = line1.Substring(0, 44);
+            }
             var line2 = mrzData.DocumentNumber.PadRight(9, '<') + GetCheckDigit(mrzData.DocumentNumber.PadRight(9, '<')) + mrzData.NationalityIso +
-                        mrzData.DateOfBirth.ToString("yyMMdd") +
-                        GetCheckDigit(mrzData.DateOfBirth.ToString("yyMMdd")) + mrzData.Gender.Substring(0, 1) +
-                        mrzData.ExpireDate.ToString("yyMMdd") +
-                        GetCheckDigit(mrzData.ExpireDate.ToString("yyMMdd"));
+                        mrzData.DateOfBirth.ToString(DateFormat) +
+                        GetCheckDigit(mrzData.DateOfBirth.ToString(DateFormat)) + mrzData.Gender.Substring(0, 1) +
+                        mrzData.ExpireDate.ToString(DateFormat) +
+                        GetCheckDigit(mrzData.ExpireDate.ToString(DateFormat));
             line2 = line2.PadRight(42, '<') + "0";
             var compositeCheckDigit =
                 GetCheckDigit(line2.Substring(0, 10) + line2.Substring(13, 7) +
