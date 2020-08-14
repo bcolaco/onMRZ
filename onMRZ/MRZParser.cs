@@ -13,8 +13,14 @@
 
         public static MrzData Parse(string mrz)
         {
-            var validationMessage = MRZValidationMessage(mrz);
-            if (!string.IsNullOrEmpty(validationMessage)) return new MrzData { IsValid = false, ValidationMessage = validationMessage };
+            if (mrz == null)
+            {
+                throw new ArgumentNullException(mrz);
+            }
+            else if(mrz.Length != 88)
+            {
+                throw new ArgumentException($"MRZ length is not valid. Should be 88 but it is {mrz.Length}", nameof(mrz));
+            }
 
             var output = new MrzData
             {
@@ -26,33 +32,18 @@
                 LastName = LastName(mrz),
                 DocumentNumber = DocumentNumber(mrz),
                 NationalityIso = NationalityIso(mrz),
-                DateOfBirth = DateOfBirth(mrz)
+                DateOfBirth = DateOfBirth(mrz),
             };
 
             output.FullName = (output.FirstName + " " + output.LastName).Replace("  ", " ").Trim();
-
-            output.Age = (int)(DateTime.Now.Subtract(output.DateOfBirth).TotalDays / 365);
-
             output.IssueDate = IssueDate(output.ExpireDate, output.NationalityIso);
-            output.IssuingAuthority = IssuingAuthority(output.IssuingCountryIso);
-            output.PlaceOfBirth = PlaceOfBirth(output.NationalityIso);
 
             return output;
         }
 
-        private static string MRZValidationMessage(string mrz)
-        {
-            if (string.IsNullOrEmpty(mrz)) return "Empty MRZ";
-            if (mrz.Length < 88) return $"MRZ length is not valid should be 88 but it is {mrz.Length}";
-            if (mrz.Substring(0, 1) != "P" && mrz.Substring(0, 1) != "V" && mrz.Substring(0, 1) != "C") return $"Document Type should either be P, V or C";
-
-            return string.Empty;
-        }
-
         private static string DocumentType(string mrz)
         {
-            return mrz.Substring(0, 1);
-
+            return mrz.Substring(0, 2).Replace("<", string.Empty);
         }
 
         private static string IssuingCountryIso(string mrz)
@@ -110,23 +101,19 @@
             return new DateTime(1900, 1, 1); //todo calculate based on Expire Date and nationality
         }
 
-        private static string IssuingAuthority(string issuingCountry)
-        {
-            return "USDS"; //todo calculate based on issuing Country
-        }
-
-        private static string PlaceOfBirth(string nationality)
-        {
-            return "Karachi"; //todo calculate based on nationality
-        }
-
         public static string CreatMrz(MrzData mrzData, bool isMakeFullName)
         {
             if (string.IsNullOrEmpty(mrzData.IssuingCountryIso) || string.IsNullOrEmpty(mrzData.LastName) || string.IsNullOrEmpty(mrzData.FirstName) || string.IsNullOrEmpty(mrzData.DocumentNumber) ||
                 string.IsNullOrEmpty(mrzData.NationalityIso) || mrzData.DateOfBirth.Year < 1901 || string.IsNullOrEmpty(mrzData.Gender) || mrzData.ExpireDate.Year < 1901) return string.Empty;
-            var line1 = "P<" + mrzData.IssuingCountryIso + (mrzData.LastName + "<<" + mrzData.FirstName).Replace(" ", "<");
+
+            var docType = mrzData.DocumentType;
+            if(docType.Length < 2)
+            {
+                docType += "<";
+            }
+            var line1 = docType + mrzData.IssuingCountryIso + (mrzData.LastName + "<<" + mrzData.FirstName).Replace(" ", "<");
             if (isMakeFullName)
-                line1 = "P<" + mrzData.IssuingCountryIso + (mrzData.FirstName + "<" + mrzData.LastName).Replace(" ", "<");
+                line1 = docType + mrzData.IssuingCountryIso + (mrzData.FirstName + "<" + mrzData.LastName).Replace(" ", "<");
             line1 = line1.PadRight(44, '<').Replace("-", "<");
             if (line1.Length > 44)
                 line1 = line1.Substring(0, 44);

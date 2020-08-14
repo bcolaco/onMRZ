@@ -13,21 +13,23 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var customer = MRZParser.Parse(dfsMRZ.Text);
-            dfsIssuingCountry.Text = customer.IssuingCountryIso;
-            dfsFirstName.Text = customer.FirstName;
-            dfsLastName.Text = customer.LastName;
-            dfsDocumentNumber.Text = customer.DocumentNumber;
-            dfsNationality.Text = customer.NationalityIso;
-            dfdDOB.Text = customer.DateOfBirth.ToString("dd/MM/yyyy");
-            dfdExpireDate.Text = customer.ExpireDate.ToString("dd/MM/yyyy");
-            dfsGender.Text = customer.Gender;
+            var mrzData = MRZParser.Parse(dfsMRZ.Text);
+            dfsDocumentType.Text = mrzData.DocumentType;
+            dfsIssuingCountry.Text = mrzData.IssuingCountryIso;
+            dfsFirstName.Text = mrzData.FirstName;
+            dfsLastName.Text = mrzData.LastName;
+            dfsDocumentNumber.Text = mrzData.DocumentNumber;
+            dfsNationality.Text = mrzData.NationalityIso;
+            dfdDOB.Text = mrzData.DateOfBirth.ToString("dd/MM/yyyy");
+            dfdExpireDate.Text = mrzData.ExpireDate.ToString("dd/MM/yyyy");
+            dfsGender.Text = mrzData.Gender;
         }
 
         private void btnMake_Click(object sender, EventArgs e)
         {
-            var customer = new MrzData
+            var mrzData = new MrzData
             {
+                DocumentType = dfsDocumentType.Text,
                 IssuingCountryIso = dfsIssuingCountry.Text,
                 FirstName = dfsFirstName.Text,
                 LastName = dfsLastName.Text,
@@ -35,11 +37,10 @@
                 NationalityIso = dfsNationality.Text,
                 DateOfBirth = DateTime.Parse(dfdDOB.Text),
                 ExpireDate = DateTime.Parse(dfdExpireDate.Text),
-                Gender = dfsGender.Text
+                Gender = dfsGender.Text,
             };
 
-
-            dfsMRZ.Text = MRZParser.CreatMrz(customer, false);
+            dfsMRZ.Text = MRZParser.CreatMrz(mrzData, false);
         }
     }
 }

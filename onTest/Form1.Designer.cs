@@ -47,6 +47,8 @@
             this.dfsIssuingCountry = new System.Windows.Forms.TextBox();
             this.btnMake = new System.Windows.Forms.Button();
             this.dfsMRZ = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dfsDocumentType = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -174,7 +176,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(31, 15);
+            this.label8.Location = new System.Drawing.Point(31, 33);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(79, 13);
             this.label8.TabIndex = 16;
@@ -182,7 +184,7 @@
             // 
             // dfsIssuingCountry
             // 
-            this.dfsIssuingCountry.Location = new System.Drawing.Point(134, 12);
+            this.dfsIssuingCountry.Location = new System.Drawing.Point(134, 30);
             this.dfsIssuingCountry.Name = "dfsIssuingCountry";
             this.dfsIssuingCountry.Size = new System.Drawing.Size(207, 20);
             this.dfsIssuingCountry.TabIndex = 15;
@@ -206,11 +208,29 @@
             this.dfsMRZ.Text = "P<GBRMALIK<<MUSSARAT<ZARIN<<<<<<<<<<<<<<<<<<5119237240GBR4612078F2212119<<<<<<<<<" +
     "<<<<<04";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(31, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(83, 13);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Document Type";
+            // 
+            // dfsDocumentType
+            // 
+            this.dfsDocumentType.Location = new System.Drawing.Point(134, 4);
+            this.dfsDocumentType.Name = "dfsDocumentType";
+            this.dfsDocumentType.Size = new System.Drawing.Size(207, 20);
+            this.dfsDocumentType.TabIndex = 19;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(737, 605);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.dfsDocumentType);
             this.Controls.Add(this.dfsMRZ);
             this.Controls.Add(this.btnMake);
             this.Controls.Add(this.label8);
@@ -258,6 +278,8 @@
         private System.Windows.Forms.TextBox dfsIssuingCountry;
         private System.Windows.Forms.Button btnMake;
         private System.Windows.Forms.TextBox dfsMRZ;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox dfsDocumentType;
     }
 }
 
