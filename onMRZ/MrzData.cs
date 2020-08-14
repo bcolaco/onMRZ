@@ -41,7 +41,7 @@
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            int hashCode = 1960940275;
+            var hashCode = 1960940275;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(DocumentType);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(IssuingCountryIso);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FirstName);
