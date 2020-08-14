@@ -39,8 +39,6 @@
                 ExpireDate = DateTime.Parse(dfdExpireDate.Text),
                 Gender = dfsGender.Text,
             };
-
-            dfsMRZ.Text = MRZParser.CreatMrz(mrzData, false);
         }
     }
 }

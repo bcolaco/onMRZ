@@ -77,9 +77,6 @@
                 DateOfBirth = DateOfBirth(mrz),
             };
 
-            output.FullName = (output.FirstName + " " + output.LastName).Replace("  ", " ").Trim();
-            output.IssueDate = IssueDate(output.ExpireDate, output.NationalityIso);
-
             return output;
         }
 
@@ -134,19 +131,49 @@
         private static DateTime ExpireDate(string mrz)
         {
             //I am assuming all passports will certainly expire this century
-            return new DateTime(int.Parse(DateTime.Now.Year.ToString().Substring(0, 2) + mrz.Substring(21 + 44, 2)), int.Parse(mrz.Substring(23 + 44, 2)),
+            return new DateTime(
+                int.Parse(DateTime.Now.Year.ToString().Substring(0, 2) + mrz.Substring(21 + 44, 2)),
+                int.Parse(mrz.Substring(23 + 44, 2)),
                 int.Parse(mrz.Substring(25 + 44, 2)));
         }
 
-        private static DateTime IssueDate(DateTime expireDate, string nationality)
-        {
-            return new DateTime(1900, 1, 1); //todo calculate based on Expire Date and nationality
-        }
+        private static ArgumentException PropertyArgumentException(string propertyName, string argumentName)
+            => new ArgumentException($"{nameof(propertyName)} is null or epmty.", nameof(argumentName));
 
-        public static string CreatMrz(MrzData mrzData, bool isMakeFullName)
+        public static string CreatMrz(MrzData mrzData)
         {
-            if (string.IsNullOrEmpty(mrzData.IssuingCountryIso) || string.IsNullOrEmpty(mrzData.LastName) || string.IsNullOrEmpty(mrzData.FirstName) || string.IsNullOrEmpty(mrzData.DocumentNumber) ||
-                string.IsNullOrEmpty(mrzData.NationalityIso) || mrzData.DateOfBirth.Year < 1901 || string.IsNullOrEmpty(mrzData.Gender) || mrzData.ExpireDate.Year < 1901) return string.Empty;
+            if(string.IsNullOrEmpty(mrzData.IssuingCountryIso))
+            {
+                throw PropertyArgumentException(mrzData.IssuingCountryIso, nameof(mrzData));
+            }
+            else if (string.IsNullOrEmpty(mrzData.LastName))
+            {
+                throw PropertyArgumentException(mrzData.LastName, nameof(mrzData));
+            }
+            else if (string.IsNullOrEmpty(mrzData.FirstName))
+            {
+                throw PropertyArgumentException(mrzData.FirstName, nameof(mrzData));
+            }
+            else if (string.IsNullOrEmpty(mrzData.DocumentNumber))
+            {
+                throw PropertyArgumentException(mrzData.DocumentNumber, nameof(mrzData));
+            }
+            else if (string.IsNullOrEmpty(mrzData.NationalityIso))
+            {
+                throw PropertyArgumentException(mrzData.NationalityIso, nameof(mrzData));
+            }
+            else if (string.IsNullOrEmpty(mrzData.Gender))
+            {
+                throw PropertyArgumentException(mrzData.Gender, nameof(mrzData));
+            }
+            else if (mrzData.DateOfBirth.Year < 1901)
+            {
+                throw new ArgumentException($"The {nameof(mrzData.DateOfBirth)} is less than 1901.", nameof(mrzData));
+            }
+            else if (mrzData.ExpireDate.Year < 1901)
+            {
+                throw new ArgumentException($"The {nameof(mrzData.ExpireDate)} is less than 1901.", nameof(mrzData));
+            }
 
             var docType = mrzData.DocumentType;
             if(docType.Length < 2)
@@ -154,8 +181,6 @@
                 docType += "<";
             }
             var line1 = docType + mrzData.IssuingCountryIso + (mrzData.LastName + "<<" + mrzData.FirstName).Replace(" ", "<");
-            if (isMakeFullName)
-                line1 = docType + mrzData.IssuingCountryIso + (mrzData.FirstName + "<" + mrzData.LastName).Replace(" ", "<");
             line1 = line1.PadRight(44, '<').Replace("-", "<");
             if (line1.Length > 44)
                 line1 = line1.Substring(0, 44);
