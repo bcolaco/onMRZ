@@ -13,7 +13,8 @@
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var mrzData = MRZParser.Parse(dfsMRZ.Text);
+            var mrzData = MrzParser.Parse(dfsMRZ.Text);
+
             dfsDocumentType.Text = mrzData.DocumentType;
             dfsIssuingCountry.Text = mrzData.IssuingCountryIso;
             dfsFirstName.Text = mrzData.FirstName;
@@ -39,6 +40,8 @@
                 ExpireDate = DateTime.Parse(dfdExpireDate.Text),
                 Gender = dfsGender.Text,
             };
+
+            dfsMRZ.Text = MrzParser.CreatMrz(mrzData);
         }
     }
 }

@@ -9,17 +9,17 @@
     {
         [Theory]
         [MemberData(nameof(ValidTestData))]
-        private void Parse(string mrz, MrzData expectedData)
+        public void Parse(string mrz, MrzData expectedData)
         {
-            var data = MRZParser.Parse(mrz);
+            var data = MrzParser.Parse(mrz);
             data.Equals(expectedData).ShouldBeTrue();
         }
 
         [Theory]
         [MemberData(nameof(ValidTestData))]
-        private void Create(string expectedMrz, MrzData data)
+        public void Create(string expectedMrz, MrzData data)
         {
-            var mrz = MRZParser.CreatMrz(data);
+            var mrz = MrzParser.CreatMrz(data);
             mrz.Equals(expectedMrz).ShouldBeTrue();
         }
 

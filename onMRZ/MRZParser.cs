@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public static class MRZParser
+    public static class MrzParser
     {
         private static readonly Dictionary<char, int> _checkDigitArray = new Dictionary<char, int>
         {
@@ -138,7 +138,7 @@
         }
 
         private static ArgumentException PropertyArgumentException(string propertyName, string argumentName)
-            => new ArgumentException($"{nameof(propertyName)} is null or epmty.", nameof(argumentName));
+            => new ArgumentException($"{propertyName} is null or epmty.", argumentName);
 
         public static string CreatMrz(MrzData mrzData)
         {
@@ -193,7 +193,7 @@
             var compositeCheckDigit =
                 GetCheckDigit(line2.Substring(0, 10) + line2.Substring(13, 7) +
                            line2.Substring(21, 22));
-            line2 = line2 + compositeCheckDigit.Replace("-", "<");
+            line2 += compositeCheckDigit.Replace("-", "<");
             return line1 + line2;
         }
 
@@ -212,9 +212,13 @@
             foreach (var dig in inputArray)
             {
                 total += _checkDigitArray[dig] * multiplier;
-                if (multiplier == 7) multiplier = 3;
-                else if (multiplier == 3) multiplier = 1;
-                else if (multiplier == 1) multiplier = 7;
+                switch (multiplier)
+                {
+                    case 7: multiplier = 3; break;
+                    case 3: multiplier = 1; break;
+                    case 1: multiplier = 7; break;
+                    default: throw new ArithmeticException($"Invalid multiplier: {multiplier}");
+                }
             }
 
             Math.DivRem(total, 10, out long result);
