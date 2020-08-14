@@ -66,53 +66,53 @@
 
             var output = new MrzData
             {
-                DocumentType = DocumentType(mrz),
-                Gender = Gender(mrz),
-                ExpireDate = ExpireDate(mrz),
-                IssuingCountryIso = IssuingCountryIso(mrz),
-                FirstName = FirstName(mrz),
-                LastName = LastName(mrz),
-                DocumentNumber = DocumentNumber(mrz),
-                NationalityIso = NationalityIso(mrz),
-                DateOfBirth = DateOfBirth(mrz),
+                DocumentType = ParseDocumentType(mrz),
+                Gender = ParseGender(mrz),
+                ExpireDate = ParseExpireDate(mrz),
+                IssuingCountryIso = ParseIssuingCountryIso(mrz),
+                FirstName = ParseFirstName(mrz),
+                LastName = ParseLastName(mrz),
+                DocumentNumber = ParseDocumentNumber(mrz),
+                NationalityIso = ParseNationalityIso(mrz),
+                DateOfBirth = ParseDateOfBirth(mrz),
             };
 
             return output;
         }
 
-        private static string DocumentType(string mrz)
+        private static string ParseDocumentType(string mrz)
         {
             return mrz.Substring(0, 2).Replace("<", string.Empty);
         }
 
-        private static string IssuingCountryIso(string mrz)
+        private static string ParseIssuingCountryIso(string mrz)
         {
             return mrz.Substring(2, 3);
         }
 
-        private static string FirstName(string mrz)
+        private static string ParseFirstName(string mrz)
         {
             var nameArraySplit = mrz.Substring(5).Split(new[] { "<<" }, StringSplitOptions.RemoveEmptyEntries);
             return nameArraySplit.Length >= 2 ? nameArraySplit[1].Replace("<", " ") : nameArraySplit[0].Replace("<", " ");
         }
 
-        private static string LastName(string mrz)
+        private static string ParseLastName(string mrz)
         {
             var nameArraySplit = mrz.Substring(5).Split(new[] { "<<" }, StringSplitOptions.RemoveEmptyEntries);
             return nameArraySplit.Length >= 2 ? nameArraySplit[0].Replace("<", " ") : string.Empty;
         }
 
-        private static string DocumentNumber(string mrz)
+        private static string ParseDocumentNumber(string mrz)
         {
             return mrz.Substring(0 + 44, 9).Replace("<", string.Empty);
         }
 
-        private static string NationalityIso(string mrz)
+        private static string ParseNationalityIso(string mrz)
         {
             return mrz.Substring(10 + 44, 3);
         }
 
-        private static DateTime DateOfBirth(string mrz)
+        private static DateTime ParseDateOfBirth(string mrz)
         {
             var dob = new DateTime(int.Parse(DateTime.Now.Year.ToString().Substring(0, 2) + mrz.Substring(13 + 44, 2)), int.Parse(mrz.Substring(15 + 44, 2)),
                     int.Parse(mrz.Substring(17 + 44, 2)));
@@ -123,12 +123,12 @@
             return dob.AddYears(-100); //Subtract a century
         }
 
-        private static string Gender(string mrz)
+        private static string ParseGender(string mrz)
         {
             return mrz.Substring(20 + 44, 1);
         }
 
-        private static DateTime ExpireDate(string mrz)
+        private static DateTime ParseExpireDate(string mrz)
         {
             //I am assuming all passports will certainly expire this century
             return new DateTime(
@@ -184,14 +184,14 @@
             line1 = line1.PadRight(44, '<').Replace("-", "<");
             if (line1.Length > 44)
                 line1 = line1.Substring(0, 44);
-            var line2 = mrzData.DocumentNumber.PadRight(9, '<') + CheckDigit(mrzData.DocumentNumber.PadRight(9, '<')) + mrzData.NationalityIso +
+            var line2 = mrzData.DocumentNumber.PadRight(9, '<') + GetCheckDigit(mrzData.DocumentNumber.PadRight(9, '<')) + mrzData.NationalityIso +
                         mrzData.DateOfBirth.ToString("yyMMdd") +
-                        CheckDigit(mrzData.DateOfBirth.ToString("yyMMdd")) + mrzData.Gender.Substring(0, 1) +
+                        GetCheckDigit(mrzData.DateOfBirth.ToString("yyMMdd")) + mrzData.Gender.Substring(0, 1) +
                         mrzData.ExpireDate.ToString("yyMMdd") +
-                        CheckDigit(mrzData.ExpireDate.ToString("yyMMdd"));
+                        GetCheckDigit(mrzData.ExpireDate.ToString("yyMMdd"));
             line2 = line2.PadRight(42, '<') + "0";
             var compositeCheckDigit =
-                CheckDigit(line2.Substring(0, 10) + line2.Substring(13, 7) +
+                GetCheckDigit(line2.Substring(0, 10) + line2.Substring(13, 7) +
                            line2.Substring(21, 22));
             line2 = line2 + compositeCheckDigit.Replace("-", "<");
             return line1 + line2;
@@ -203,7 +203,7 @@
         /// <param name="icaoPassportNumber">The ICAO document number.</param>
         /// <returns>The check digit.</returns>
         /// <seealso cref="http://www.highprogrammer.com/alan/numbers/mrp.html#checkdigit"/>
-        internal static string CheckDigit(string icaoPassportNumber)
+        internal static string GetCheckDigit(string icaoPassportNumber)
         {
             icaoPassportNumber = icaoPassportNumber.ToUpper();
             var inputArray = icaoPassportNumber.Trim().ToCharArray();

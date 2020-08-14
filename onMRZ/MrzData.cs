@@ -23,6 +23,7 @@
 
         public DateTime ExpireDate { get; set; }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             return obj is MrzData data &&
@@ -37,6 +38,7 @@
                    ExpireDate == data.ExpireDate;
         }
 
+        /// <inheritdoc />
         public override int GetHashCode()
         {
             int hashCode = 1960940275;
