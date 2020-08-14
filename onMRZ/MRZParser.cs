@@ -46,9 +46,13 @@
             {'Z', 35},
         };
 
-        //Parsing is based on https://en.wikipedia.org/wiki/Machine-readable_passport
-        //Useful information https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf
-
+        /// <summary>
+        /// Parses a MRZ string.
+        /// </summary>
+        /// <param name="mrz">The MRZ string to parse.</param>
+        /// <returns>The parsed MRZ data.</returns>
+        /// <seealso cref="https://en.wikipedia.org/wiki/Machine-readable_passport"/>
+        /// <seealso cref="https://www.icao.int/publications/Documents/9303_p3_cons_en.pdf"/>
         public static MrzData Parse(string mrz)
         {
             if (mrz == null)
